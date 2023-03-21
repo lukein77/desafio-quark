@@ -8,12 +8,12 @@ class Quality {
 
 class StandardQuality : public Quality {
     public:
-        virtual double calculatePrice(double price) override { return price; }
+        double calculatePrice(double price) override { return price; }
 };
 
 class PremiumQuality : public Quality {
     public:
-        virtual double calculatePrice(double price) override { return price * 0.3; }
+        double calculatePrice(double price) override { return price * 0.3; }
 };
 
-#endif
+#endif  // _QUALITY_H_DEFINED_

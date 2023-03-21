@@ -16,4 +16,4 @@ class MaoNeck : public Neck {
         virtual double calculatePrice(double price) override { return price * 0.03; }
 };
 
-#endif
+#endif  // _NECK_H_DEFINED_
