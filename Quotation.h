@@ -2,8 +2,10 @@
 #define _QUOTATION_H_DEFINED_
 
 #include "Garment.h"
+#include <string>
 
 class Quotation {
+    static int id_count;
     private:
         int _id;            // Numero de cotizacion
         int _sellerCode;    // Codigo de vendedor
@@ -13,7 +15,9 @@ class Quotation {
         double _finalPrice;     // Precio final
     public:
         Quotation(int sellerCode, Garment *garment, int number, double finalPrice);
-        ~Quotation();
+        ~Quotation() { delete _garment; }
+        std::string toString();
+
 };
 
 #endif  // _QUOTATION_H_DEFINED_

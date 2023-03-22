@@ -17,7 +17,8 @@ class Store {
         ~Store();
         void addSeller(Seller &seller);
         void addGarment(Garment *garment);
-        
+        const std::string getName() const { return _name; }
+        const std::string getAddress() const { return _address; }
 };
 
 #endif

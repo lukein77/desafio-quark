@@ -11,7 +11,7 @@ class Garment {
         double _unitPrice;
         int _stock;
     public:
-        virtual ~Garment() { delete _quality; }
+        virtual ~Garment();
         virtual double calculatePrice() = 0;
         bool setUnitPrice(const double price);
         bool setStock(const int stock);

@@ -9,7 +9,6 @@ Trousers::Trousers(Quality *quality, double unitPrice, int stock) :
 CommonTrousers::CommonTrousers(Quality *quality, double unitPrice, int stock) : 
     Trousers(quality, unitPrice, stock) {}
 
-CommonTrousers::~CommonTrousers() {}
 
 double CommonTrousers::calculatePrice()
 {
