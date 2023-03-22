@@ -11,7 +11,13 @@ class Store {
         std::string _name;
         std::string _address;
         std::list<Garment*> _garments;
-        std::list<Seller> _sellers;
+        std::list<std::reference_wrapper<Seller>> _sellers;
+    public:
+        Store(std::string name, std::string address);
+        ~Store();
+        void addSeller(Seller &seller);
+        void addGarment(Garment *garment);
+        
 };
 
 #endif

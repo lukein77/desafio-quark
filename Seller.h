@@ -1,5 +1,5 @@
-#ifndef _VENDEDOR_H_DEFINED_
-#define _VENDEDOR_H_DEFINED_
+#ifndef _SELLER_H_DEFINED_
+#define _SELLER_H_DEFINED_
 
 #include <string>
 #include <list>
@@ -10,12 +10,11 @@ class Seller {
         std::string _name;
         std::string _surname;
         int _sellerCode;
-        std::list<Quotation> _history;
-
+        std::list<std::reference_wrapper<Quotation>> _history;
     public:
-        Seller();
+        Seller(std::string name, std::string surname, int code);
         ~Seller();
-
+        void addQuotation(Quotation &quotation);
 };
 
-#endif
+#endif  // _SELLER_H_DEFINED_

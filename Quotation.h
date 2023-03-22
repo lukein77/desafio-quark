@@ -1,19 +1,19 @@
-#ifndef _COTIZACION_H_DEFINED_
-#define _COTIZACION_H_DEFINED_
+#ifndef _QUOTATION_H_DEFINED_
+#define _QUOTATION_H_DEFINED_
 
 #include "Garment.h"
 
 class Quotation {
     private:
-        int _id;
-        // fecha_hora
-        int _sellerCode;
-        Garment *_garment;
-        int _number;
-        double _result;
+        int _id;            // Numero de cotizacion
+        int _sellerCode;    // Codigo de vendedor
+        // fecha_hora   
+        Garment *_garment;  // Prenda cotizada
+        int _number;        // Cantidad cotizada
+        double _finalPrice;     // Precio final
     public:
-        Quotation();
+        Quotation(int sellerCode, Garment *garment, int number, double finalPrice);
         ~Quotation();
 };
 
-#endif
+#endif  // _QUOTATION_H_DEFINED_
