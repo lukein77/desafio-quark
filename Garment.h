@@ -6,12 +6,18 @@
 // Prenda (clase abstracta)
 class Garment {
     protected:
+        Garment(Quality *quality, double unitPrice, int stock);
         Quality *_quality;
         double _unitPrice;
         int _stock;
     public:
-        virtual ~Garment() {}
+        virtual ~Garment() { delete _quality; }
         virtual double calculatePrice() = 0;
+        bool setUnitPrice(const double price);
+        bool setStock(const int stock);
+        bool updateStock(const int number);
+        const int getStock() const { return _stock; }
+        
 };
 
 

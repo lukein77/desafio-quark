@@ -12,7 +12,6 @@ void View::print(const std::string &text) {
 }
 
 void View::showMainMenu() {
-    
 
     char option = '0';
 
