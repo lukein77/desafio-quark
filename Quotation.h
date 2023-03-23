@@ -7,11 +7,11 @@
 class Quotation {
     static int id_count;
     private:
-        int _id;            // Numero de cotizacion
-        int _sellerCode;    // Codigo de vendedor
-        // fecha_hora   
-        Garment *_garment;  // Prenda cotizada
-        int _number;        // Cantidad cotizada
+        int _id;                // Numero de cotizacion
+        int _sellerCode;        // Codigo de vendedor
+        std::string _timestamp; // Fecha y hora en que se realizo
+        Garment *_garment;      // Prenda cotizada
+        int _number;            // Cantidad cotizada
         double _finalPrice;     // Precio final
     public:
         Quotation(int sellerCode, Garment *garment, int number, double finalPrice);

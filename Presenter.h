@@ -19,6 +19,7 @@ class Presenter {
         const std::string sellerDoSomething();
         const std::string getStoreName() const { return _store->getName(); }
         const std::string getStoreAddress() const { return _store->getAddress(); }
+        const std::string getSellerName() const { return _seller->getFullName(); }
 };
 
 #endif  // _PRESENTER_H_DEFINED_

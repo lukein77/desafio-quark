@@ -13,11 +13,12 @@ class Garment {
     public:
         virtual ~Garment();
         virtual double calculatePrice() = 0;
+//        virtual std::string toString() = 0;
         bool setUnitPrice(const double price);
         bool setStock(const int stock);
         bool updateStock(const int number);
         const int getStock() const { return _stock; }
-        
+        const int getUnitPrice() const { return _unitPrice; }
 };
 
 

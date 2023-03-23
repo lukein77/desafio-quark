@@ -9,12 +9,15 @@ class Presenter;
 class View : public IView {
     private:
         Presenter *_presenter;
-        void waitForKey();
+        void waitForKey(bool showMessage = false);
+        void showHeader();
+        void showQuotationMenu();
+        void showShirtQuotationMenu();
+        void showTrousersQuotationMenu();
     public:
         View();
         ~View() {}
         void print(const std::string &text);
-        void showHeader();
         void showMainMenu();
 };
 

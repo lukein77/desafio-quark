@@ -17,7 +17,7 @@ class Seller {
         void addQuotation(Quotation &quotation);
         const std::string getName() const { return _name; }
         const std::string getSurname() const { return _surname; }
-        const std::string getFullname() const { return (_name + " " + _surname); }
+        const std::string getFullName() const { return (_name + " " + _surname); }
 };
 
 #endif  // _SELLER_H_DEFINED_
