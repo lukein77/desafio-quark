@@ -60,7 +60,7 @@ void View::showMainMenu() {
             std::cin.ignore();
             showQuotationMenu();
         }
-        else if ((option == 'x') || (option == 'x')) {
+        else if ((option == 'x') || (option == 'X')) {
             print("Vuelva pronto");
             alive = false;
         }
@@ -73,7 +73,7 @@ void View::showMainMenu() {
 
 /// @brief Muestra el menu para realizar una cotizacion
 void View::showQuotationMenu() {
-    std::cin.ignore();
+    /*std::cin.ignore();
     char option = '0';
 
     do {
@@ -93,10 +93,20 @@ void View::showQuotationMenu() {
             print("Cotizo pantalon jijiji");
             waitForKey();
         }
-    } while ((option != 'x') || (option != 'x'));
+    } while ((option != 'x') || (option != 'X'));
 
     std::cin.ignore();
     showMainMenu();
+    */
+    std::system("cls");
+    print(_presenter->getGarmentList());
+
+    std::string option;
+    std::cin >> option;
+
+    print(_presenter->getGarmentAt(std::stoi(option)));
+
+    waitForKey();
 }
 
 void View::showShirtQuotationMenu() {

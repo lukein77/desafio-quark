@@ -9,10 +9,12 @@ Trousers::Trousers(Quality *quality, double unitPrice, int stock) :
 CommonTrousers::CommonTrousers(Quality *quality, double unitPrice, int stock) : 
     Trousers(quality, unitPrice, stock) {}
 
-
-double CommonTrousers::calculatePrice()
-{
+double CommonTrousers::calculatePrice() {
     return (_quality->calculatePrice(_unitPrice));
+}
+
+const std::string CommonTrousers::toString() {
+    return Trousers::toString() + " comun - " + _quality->toString();
 }
 /***********************/
 
@@ -20,9 +22,12 @@ double CommonTrousers::calculatePrice()
 SkinnyTrousers::SkinnyTrousers(Quality *quality, double unitPrice, int stock) :
     Trousers(quality, unitPrice, stock) {}
 
-double SkinnyTrousers::calculatePrice()
-{
+double SkinnyTrousers::calculatePrice() {
     return (_quality->calculatePrice(_unitPrice * MODIF_SKINNYTROUSERS));
+}
+
+const std::string SkinnyTrousers::toString() {
+    return Trousers::toString() + " chupin - " + _quality->toString();
 }
 
 /************************/

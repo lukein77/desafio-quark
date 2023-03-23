@@ -8,7 +8,6 @@ Shirt::Shirt(Quality *quality, double unitPrice, int stock, Neck *neck) :
 Shirt::~Shirt() {
     delete _neck;
 }
-
 /***************/
 
 
@@ -17,9 +16,12 @@ ShortSleeveShirt::ShortSleeveShirt(Quality *quality, double unitPrice, int stock
     Shirt(quality, unitPrice, stock, neck) {}
 
 
-double ShortSleeveShirt::calculatePrice()
-{
+double ShortSleeveShirt::calculatePrice() {
     return (_quality->calculatePrice(_neck->calculatePrice(_unitPrice * MODIF_SHORTSLEEVE)));
+}
+
+const std::string ShortSleeveShirt::toString() {
+    return Shirt::toString() + " Manga corta " + _neck->toString() + " - " + _quality->toString();
 }
 
 /************************/
@@ -30,9 +32,12 @@ double ShortSleeveShirt::calculatePrice()
 LongSleeveShirt::LongSleeveShirt(Quality *quality, double unitPrice, int stock, Neck *neck) :
     Shirt(quality, unitPrice, stock, neck) {}
 
-double LongSleeveShirt::calculatePrice()
-{
+double LongSleeveShirt::calculatePrice() {
     return (_quality->calculatePrice(_neck->calculatePrice(_unitPrice)));
+}
+
+const std::string LongSleeveShirt::toString() {
+    return Shirt::toString() + " Manga larga " + _neck->toString() + " - " + _quality->toString();
 }
 
 /************************/

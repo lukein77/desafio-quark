@@ -1,6 +1,9 @@
 #include "Store.h"
+#include <stdexcept>
 
 Store::Store(std::string name, std::string address) : _name(name), _address(address) {
+    // aca cargo todas las prendas
+    
 }
 
 Store::~Store() {
@@ -13,5 +16,14 @@ void Store::addSeller(Seller &seller) {
 }
 
 void Store::addGarment(Garment *garment) {
-    this->_garments.push_front(garment);
+    this->_garments.push_back(garment);
+}
+
+Garment *Store::getGarmentAt(int index) const {
+    try {
+        return this->_garments.at(index);
+    } 
+    catch (const std::out_of_range &e) {
+        return nullptr;
+    } 
 }

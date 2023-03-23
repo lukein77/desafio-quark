@@ -13,6 +13,7 @@ class Shirt : public Garment {
         Neck *_neck;
     public:
         virtual ~Shirt();
+        const std::string toString() override { return "Camisa"; }
 };
 
 class ShortSleeveShirt : public Shirt {
@@ -20,6 +21,7 @@ class ShortSleeveShirt : public Shirt {
         ShortSleeveShirt(Quality *quality, double unitPrice, int stock, Neck *neck);
         ~ShortSleeveShirt() {}
         double calculatePrice() override;
+        const std::string toString() override;
 };
 
 class LongSleeveShirt : public Shirt {
@@ -27,6 +29,7 @@ class LongSleeveShirt : public Shirt {
         LongSleeveShirt(Quality *quality, double unitPrice, int stock, Neck *neck);
         ~LongSleeveShirt() {}
         double calculatePrice() override;
+        const std::string toString() override;
 };
 
 #endif // _SHIRT_H_DEFINED_

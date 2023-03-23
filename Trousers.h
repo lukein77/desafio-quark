@@ -11,6 +11,7 @@ class Trousers : public Garment {
         Trousers(Quality *quality, double unitPrice, int stock);
     public:
         virtual ~Trousers() {}
+        const std::string toString() override { return "Pantalon"; }
 };
 
 class CommonTrousers : public Trousers {
@@ -18,6 +19,7 @@ class CommonTrousers : public Trousers {
         CommonTrousers(Quality *quality, double unitPrice, int stock);
         ~CommonTrousers() {}
         double calculatePrice() override;
+        const std::string toString() override;
 };
 
 class SkinnyTrousers : public Trousers {
@@ -25,6 +27,7 @@ class SkinnyTrousers : public Trousers {
         SkinnyTrousers(Quality *quality, double unitPrice, int stock);
         ~SkinnyTrousers() {}
         double calculatePrice() override;
+        const std::string toString() override;
 };
 
 

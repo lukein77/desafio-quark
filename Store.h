@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 #include "Garment.h"
 #include "Seller.h"
 
@@ -10,7 +11,7 @@ class Store {
     private:
         std::string _name;
         std::string _address;
-        std::list<Garment*> _garments;
+        std::vector<Garment*> _garments;
         std::list<std::reference_wrapper<Seller>> _sellers;
     public:
         Store(std::string name, std::string address);
@@ -19,6 +20,8 @@ class Store {
         void addGarment(Garment *garment);
         const std::string getName() const { return _name; }
         const std::string getAddress() const { return _address; }
+        const int getTotalGarments() const { return _garments.size(); }
+        Garment *getGarmentAt(int index) const;
 };
 
 #endif
