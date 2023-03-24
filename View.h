@@ -11,13 +11,13 @@ class View : public IView {
         Presenter *_presenter;
         void waitForKey(bool showMessage = false);
         void showHeader();
+        void showSellerHistory();
         void showQuotationMenu();
-        void showShirtQuotationMenu();
-        void showTrousersQuotationMenu();
+        void makeQuotation(int garmentCode);
     public:
         View();
         ~View() {}
-        void print(const std::string &text);
+        void print(const std::string &text, bool newline = true) override;
         void showMainMenu();
 };
 

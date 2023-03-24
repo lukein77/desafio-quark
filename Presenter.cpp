@@ -4,12 +4,13 @@
 #include "Quotation.h"
 #include "Shirt.h"
 #include "Trousers.h"
+#include <iostream>         // SACAR ESTO
 
 Presenter::Presenter(IView *view)
 {
     this->_view = view;
     this->_store = new Store("Casa de ropa", "25 de mayo 1810");
-    this->_seller = new Seller("Lionel", "Messi", 1);
+    this->_seller = new Seller("Juan", "Perez", 1);
     this->loadGarmentList();
 }
 
@@ -18,10 +19,8 @@ Presenter::~Presenter() {
     delete _seller;
 }
 
-const std::string Presenter::sellerDoSomething() {
-    Garment *g = new ShortSleeveShirt(new PremiumQuality(), 100, 120, new CommonNeck());
-    Quotation *q = new Quotation(1, g, 20, g->calculatePrice()*20);
-    return q->toString();
+const std::list<Quotation> Presenter::getSellerHistory() {
+    return _seller->getHistory();
 }
 
 const std::string Presenter::getGarmentList() const {
@@ -33,31 +32,35 @@ const std::string Presenter::getGarmentList() const {
     return temp;
 }
 
-const std::string Presenter::getGarmentAt(int index) const {
+bool Presenter::validateGarmentIndex(int index) const {
+    return (_store->getGarmentAt(index) != nullptr);
+}
+
+const std::string Presenter::getGarmentName(int index) const {
+    return (_store->getGarmentAt(index)->toString());
+}
+
+const int Presenter::getGarmentStock(int index) const {
+    return (_store->getGarmentAt(index)->getStock());
+}
+
+bool Presenter::setGarmentUnitPrice(int index, double price) {
+    return (_store->getGarmentAt(index)->setUnitPrice(price));
+}
+
+bool Presenter::makeQuotation(int index, int number) {
     Garment *g = _store->getGarmentAt(index);
-    if (g) {
-        return g->toString();
-    } 
-    else {
-        return "Codigo invalido";
+    if (g->updateStock(number)) {
+        Quotation q(_seller->getCode(), g, number);
+        _seller->addQuotation(q);
+        std::cout << q.toString();
+        return true;
+    } else {
+        return false;
     }
 }
 
 void Presenter::loadGarmentList() {
-    /*
-    new MangaCorta(Standard, MaoNeck, 100)
-    new MangaCorta(Premium, MaoNeck, 100)
-    new MangaCorta(Standard, CommonNeck, 150)
-    new MangaCorta(Premium, CommonNeck, 150)
-    new MangaLarga(Standard, MaoNeck, 75)
-    new MangaLarga(Premium, MaoNeck, 75)
-    new MangaLarga(Standard, CommonNeck, 175)
-    new MangaLarga(Premium, CommonNeck, 175)
-    new Chupin(Standard, 750)
-    new Chupin(Premium, 750)
-    new PantalonComun(Standard, 250)
-    new PantalonComun(Premium, 250)
-    */
    _store->addGarment(new ShortSleeveShirt(new StandardQuality(), 0, 100, new MaoNeck()));
    _store->addGarment(new ShortSleeveShirt(new PremiumQuality(), 0, 100, new MaoNeck()));
    _store->addGarment(new ShortSleeveShirt(new StandardQuality(), 0, 150, new CommonNeck()));

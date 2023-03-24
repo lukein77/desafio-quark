@@ -1,5 +1,6 @@
 #include "View.h"
 #include "Presenter.h"
+//#include "Quotation.h"
 #include <iostream>
 #include <windows.h>
 
@@ -10,10 +11,13 @@ View::View() {
     showMainMenu();
 }
 
-/// @brief Imprime una linea de texto en consola
-/// @param text El texto a imprimir
-void View::print(const std::string &text) {
-    std::cout << text << std::endl;
+
+/// @brief Imprime una linea de codigo por consola.
+/// @param text Texto a imprimir
+/// @param newline Indica si insertar un salto de linea
+void View::print(const std::string &text, bool newline) {
+    std::cout << text;
+    if (newline) std::cout << std::endl;
 }
 
 /// @brief Queda a la espera de que el usuario presione una tecla para continuar
@@ -35,6 +39,17 @@ void View::showHeader() {
     print("----------------------------------");
 }
 
+void View::showSellerHistory() {
+    std::system("cls");
+    print("Historial de cotizaciones de ", false);
+    print(_presenter->getSellerName());
+    
+    std::list<Quotation> sellerHistory = _presenter->getSellerHistory();
+    for (auto q : sellerHistory) {
+        print(q.toString());
+    }
+    waitForKey();
+}
 
 /// @brief Imprime el menu principal y las opciones para su navegacion
 void View::showMainMenu() {
@@ -52,8 +67,8 @@ void View::showMainMenu() {
         std::cin.get(option);
 
         if (option == '1') {
-            std::system("cls");
-            print(_presenter->sellerDoSomething());
+            std::cin.ignore();
+            showSellerHistory();
             waitForKey();
         } 
         else if (option == '2') {
@@ -73,46 +88,53 @@ void View::showMainMenu() {
 
 /// @brief Muestra el menu para realizar una cotizacion
 void View::showQuotationMenu() {
-    /*std::cin.ignore();
-    char option = '0';
 
-    do {
+    bool validOption = false;
+    do { 
         std::system("cls");
-        print("Que prenda desea cotizar?");
-        print("1) Camisa");
-        print("2) Pantalon");
-        print("x) Volver al menu principal");
+        print("Seleccione el codigo de la prenda a cotizar, o X para regresar al menu principal.");
+        print(_presenter->getGarmentList());
 
-        std::cin.get(option);
-
-        if (option == '1') {
-            print("Cotizo camisa jiji");
+        std::string option;
+        std::cin >> option;
+        
+        if ((option != "x") && (option != "X")) {
+            int garmentCode = std::stoi(option);
+            validOption = _presenter->validateGarmentIndex(garmentCode);
+            
+            if (validOption) {
+                //std::cout << "Cantidad ingresada: " << option;
+                std::cin.ignore();
+                makeQuotation(garmentCode);
+            } else {
+                print("Codigo invalido.");
+            }
             waitForKey();
+        } else {
+            validOption = true; // para salir del while
         }
-        else if (option == '2') {
-            print("Cotizo pantalon jijiji");
-            waitForKey();
-        }
-    } while ((option != 'x') || (option != 'X'));
-
+    } while (!validOption);
     std::cin.ignore();
-    showMainMenu();
-    */
+}
+
+void View::makeQuotation(int garmentCode) {
     std::system("cls");
-    print(_presenter->getGarmentList());
-
     std::string option;
-    std::cin >> option;
 
-    print(_presenter->getGarmentAt(std::stoi(option)));
-
-    waitForKey();
-}
-
-void View::showShirtQuotationMenu() {
+    print("Cotizando prenda: ", false);
+    print(_presenter->getGarmentName(garmentCode));
+    print("Cantidad en stock: ", false);
+    print(std::to_string(_presenter->getGarmentStock(garmentCode)));
     
+    print("Ingrese el precio unitario de la prenda:");
+    std::cin >> option;
+    if (_presenter->setGarmentUnitPrice(garmentCode, std::stod(option))) {
+        print("Ingrese cantidad a cotizar:");
+        std::cin >> option;
+        if (_presenter->makeQuotation(garmentCode, std::stoi(option))) {
+            print("La cotizacion se realizo correctamente.");
+        } else {
+            print("Error");
+        }
+    }
 }
-
-void View::showTrousersQuotationMenu() {
-}
-

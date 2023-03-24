@@ -6,7 +6,7 @@
 #include "Seller.h"
 
 class IView;
-class Seller;
+class Quotation;
 
 class Presenter {
     private:
@@ -17,12 +17,16 @@ class Presenter {
     public:
         Presenter(IView *view);
         ~Presenter();
-        const std::string sellerDoSomething();
+        const std::list<Quotation> getSellerHistory();
         const std::string getStoreName() const { return _store->getName(); }
         const std::string getStoreAddress() const { return _store->getAddress(); }
         const std::string getSellerName() const { return _seller->getFullName(); }
         const std::string getGarmentList() const;
-        const std::string getGarmentAt(int index) const;
+        bool validateGarmentIndex(int index) const;
+        const std::string getGarmentName(int index) const;
+        const int getGarmentStock(int index) const;
+        bool setGarmentUnitPrice(int index, double price);
+        bool makeQuotation(int index, int number);
 };
 
 #endif  // _PRESENTER_H_DEFINED_

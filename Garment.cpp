@@ -8,8 +8,7 @@ Garment::~Garment() {
     delete _quality;
 }
 
-bool Garment::setUnitPrice(const double price)
-{
+bool Garment::setUnitPrice(const double price) {
     if (price >= 0) {
         this->_unitPrice = price;
         return true;
@@ -26,6 +25,9 @@ bool Garment::setStock(const int stock) {
 }
 
 bool Garment::updateStock(const int number) {
-    this->_stock -= number;
-    return (this->_stock >= 0);
+    if (number <= _stock) {
+        _stock -= number;
+        return true;
+    } else
+        return false;
 }

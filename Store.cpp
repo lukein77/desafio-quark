@@ -2,8 +2,6 @@
 #include <stdexcept>
 
 Store::Store(std::string name, std::string address) : _name(name), _address(address) {
-    // aca cargo todas las prendas
-    
 }
 
 Store::~Store() {

@@ -6,7 +6,7 @@
 // Define la interfaz para la vista.
 class IView {
     public:
-        virtual void print(const std::string &text) = 0;
+        virtual void print(const std::string &text, bool newline) = 0;
         virtual void showMainMenu() = 0;
 };
 

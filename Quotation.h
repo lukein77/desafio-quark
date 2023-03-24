@@ -10,12 +10,13 @@ class Quotation {
         int _id;                // Numero de cotizacion
         int _sellerCode;        // Codigo de vendedor
         std::string _timestamp; // Fecha y hora en que se realizo
-        Garment *_garment;      // Prenda cotizada
+        std::string _garment;   // Prenda cotizada
         int _number;            // Cantidad cotizada
+        double _unitPrice;      // Precio unitario
         double _finalPrice;     // Precio final
     public:
-        Quotation(int sellerCode, Garment *garment, int number, double finalPrice);
-        ~Quotation() { delete _garment; }
+        Quotation(int sellerCode, Garment *garment, int number);
+        ~Quotation() {}
         std::string toString();
 
 };
