@@ -3,6 +3,8 @@
 //#include "Quotation.h"
 #include <iostream>
 #include <windows.h>
+#include <vector>
+#include <limits>
 
 View::View() {
     _presenter = new Presenter(this);
@@ -24,8 +26,12 @@ void View::print(const std::string &text, bool newline) {
 /// @param showMessage Define si se le pide explicitamente presionar una tecla al usuario o no
 void View::waitForKey(bool showMessage) {
     if (showMessage) print("Presione una tecla para continuar.");
+    ignoreLine();
     std::cin.get();
-    std::cin.ignore();
+}
+
+void View::ignoreLine() {
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 
@@ -51,6 +57,14 @@ void View::showSellerHistory() {
     waitForKey();
 }
 
+void View::showGarmentList() {
+    std::vector<Garment*> garmentList = _presenter->getGarmentList();
+    int n = _presenter->getTotalGarments();
+    for (int i = 0; i < n; i++) {
+        print(std::to_string(i+1) + ") " + garmentList.at(i)->toString());
+    }
+}
+
 /// @brief Imprime el menu principal y las opciones para su navegacion
 void View::showMainMenu() {
 
@@ -69,7 +83,6 @@ void View::showMainMenu() {
         if (option == '1') {
             std::cin.ignore();
             showSellerHistory();
-            waitForKey();
         } 
         else if (option == '2') {
             std::cin.ignore();
@@ -92,19 +105,17 @@ void View::showQuotationMenu() {
     bool validOption = false;
     do { 
         std::system("cls");
-        print("Seleccione el codigo de la prenda a cotizar, o X para regresar al menu principal.");
-        print(_presenter->getGarmentList());
-
-        std::string option;
-        std::cin >> option;
+        print("Listado de prendas:");
+        showGarmentList();
         
-        if ((option != "x") && (option != "X")) {
-            int garmentCode = std::stoi(option);
+        print("Seleccione el codigo de la prenda a cotizar, o 0 para regresar al menu principal.");
+
+        int garmentCode = getInteger();
+
+        if (garmentCode != 0) {
             validOption = _presenter->validateGarmentIndex(garmentCode);
             
             if (validOption) {
-                //std::cout << "Cantidad ingresada: " << option;
-                std::cin.ignore();
                 makeQuotation(garmentCode);
             } else {
                 print("Codigo invalido.");
@@ -126,15 +137,55 @@ void View::makeQuotation(int garmentCode) {
     print("Cantidad en stock: ", false);
     print(std::to_string(_presenter->getGarmentStock(garmentCode)));
     
-    print("Ingrese el precio unitario de la prenda:");
-    std::cin >> option;
-    if (_presenter->setGarmentUnitPrice(garmentCode, std::stod(option))) {
-        print("Ingrese cantidad a cotizar:");
-        std::cin >> option;
-        if (_presenter->makeQuotation(garmentCode, std::stoi(option))) {
-            print("La cotizacion se realizo correctamente.");
+    print("Ingrese el precio unitario de la prenda, o 0 para volver atras:");
+    double unitPrice = getDouble();
+    if (unitPrice != 0) {
+        if (_presenter->setGarmentUnitPrice(garmentCode, unitPrice)) {
+            print("Ingrese cantidad a cotizar, o 0 para volver atras:");
+            int number = getInteger();
+            if (number != 0) {
+                if (_presenter->makeQuotation(garmentCode, number)) {
+                    print("La cotizacion se realizo correctamente.");
+                } else {
+                    print("Error realizando la cotizacion.");
+                }
+            }
+        }
+    }
+}
+
+/// @brief Pide al usuario ingresar un entero mayor o igual a x.
+/// @return Entero mayor o igual a 0
+int View::getInteger() {
+    while (true) {
+        int n;
+        std::cin >> n;
+        
+        if (!std::cin) {
+            std::cin.clear();
+            ignoreLine();
+            print("Debe ingresar un numero.");
         } else {
-            print("Error");
+            ignoreLine();
+            return n;
+        }
+    }
+}
+
+/// @brief Pide al usuario ingresar un numero decimal positivo.
+/// @return Numero de punto flotante de doble precision mayor o igual a 0
+double View::getDouble() {
+   while (true) {
+        double n;
+        std::cin >> n;
+        
+        if (!std::cin) {
+            std::cin.clear();
+            ignoreLine();
+            print("Debe ingresar un numero.");
+        } else {
+            ignoreLine();
+            return n;
         }
     }
 }

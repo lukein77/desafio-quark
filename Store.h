@@ -22,6 +22,7 @@ class Store {
         const std::string getAddress() const { return _address; }
         const int getTotalGarments() const { return _garments.size(); }
         Garment *getGarmentAt(int index) const;
+        const std::vector<Garment*> getGarmentList() const { return _garments; }
 };
 
 #endif

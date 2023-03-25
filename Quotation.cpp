@@ -7,7 +7,6 @@ int Quotation::id_count = 0;
 Quotation::Quotation(int sellerCode, Garment *garment, int number) {
     this->_id = ++id_count;     // Identificacion de cotizacion
 
-    // Fecha y hora de la cotizacion (change this shit asap)
     time_t now = time(0);
 	tm *localTime = localtime(&now);
 
@@ -32,4 +31,16 @@ std::string Quotation::toString() {
         "\nCantidad cotizada: "+std::to_string(_number)+
         "\nPrecio final: $"+std::to_string(_finalPrice)+"\n";
     return msg;
+}
+
+void Quotation::saveToFile(std::ofstream &output) {
+    output << _id;
+    output << _timestamp;
+    output << _sellerCode;
+}
+
+void Quotation::loadFromFile(std::ifstream &input) {
+    input >> _id;
+    input >> _timestamp;
+    input >> _sellerCode;
 }

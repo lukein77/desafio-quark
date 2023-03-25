@@ -21,8 +21,11 @@ class Presenter {
         const std::string getStoreName() const { return _store->getName(); }
         const std::string getStoreAddress() const { return _store->getAddress(); }
         const std::string getSellerName() const { return _seller->getFullName(); }
-        const std::string getGarmentList() const;
+        const std::vector<Garment*> getGarmentList() const;
+        const int getTotalGarments() const { return _store->getTotalGarments(); }
         bool validateGarmentIndex(int index) const;
+        int stringToInteger(std::string s);
+        double stringToDouble(std::string s);
         const std::string getGarmentName(int index) const;
         const int getGarmentStock(int index) const;
         bool setGarmentUnitPrice(int index, double price);

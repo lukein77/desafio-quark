@@ -20,6 +20,8 @@ class Seller {
         const std::string getFullName() const { return (_name + " " + _surname); }
         const int getCode() const { return _sellerCode; }
         const std::list<Quotation> getHistory() const { return _history; }
+        void loadQuotations();
+        void saveQuotations();
 };
 
 #endif  // _SELLER_H_DEFINED_

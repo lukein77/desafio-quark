@@ -4,17 +4,19 @@
 #include "Quotation.h"
 #include "Shirt.h"
 #include "Trousers.h"
-#include <iostream>         // SACAR ESTO
+#include <stdexcept>
 
 Presenter::Presenter(IView *view)
 {
     this->_view = view;
     this->_store = new Store("Casa de ropa", "25 de mayo 1810");
     this->_seller = new Seller("Juan", "Perez", 1);
+    //this->_seller->loadQuotations();
     this->loadGarmentList();
 }
 
 Presenter::~Presenter() {
+    _seller->saveQuotations();
     delete _store;
     delete _seller;
 }
@@ -23,37 +25,61 @@ const std::list<Quotation> Presenter::getSellerHistory() {
     return _seller->getHistory();
 }
 
-const std::string Presenter::getGarmentList() const {
-    int n = _store->getTotalGarments();
+const std::vector<Garment*> Presenter::getGarmentList() const {
+    /*int n = _store->getTotalGarments();?
     std::string temp = "";
     for (int i = 0; i < n; i++) {
-        temp += std::to_string(i) + ") " + _store->getGarmentAt(i)->toString() + "\n";
+        temp += std::to_string(i+1) + ") " + _store->getGarmentAt(i)->toString() + "\n";
     }
-    return temp;
+    return temp;*/
+    return (_store->getGarmentList());
 }
 
 bool Presenter::validateGarmentIndex(int index) const {
-    return (_store->getGarmentAt(index) != nullptr);
+    return (_store->getGarmentAt(index-1) != nullptr);
+}
+
+int Presenter::stringToInteger(std::string s) {
+    try {
+        return std::stoi(s);
+    } 
+    catch (const std::invalid_argument &e) {
+        return -2;
+    } 
+    catch (const std::out_of_range &e) {
+        return -3;
+    }
+}
+
+double Presenter::stringToDouble(std::string s) {
+    try {
+        return std::stod(s);
+    } 
+    catch (const std::invalid_argument &e) {
+        return -2;
+    } 
+    catch (const std::out_of_range &e) {
+        return -3;
+    }
 }
 
 const std::string Presenter::getGarmentName(int index) const {
-    return (_store->getGarmentAt(index)->toString());
+    return (_store->getGarmentAt(index-1)->toString());
 }
 
 const int Presenter::getGarmentStock(int index) const {
-    return (_store->getGarmentAt(index)->getStock());
+    return (_store->getGarmentAt(index-1)->getStock());
 }
 
 bool Presenter::setGarmentUnitPrice(int index, double price) {
-    return (_store->getGarmentAt(index)->setUnitPrice(price));
+    return (_store->getGarmentAt(index-1)->setUnitPrice(price));
 }
 
 bool Presenter::makeQuotation(int index, int number) {
-    Garment *g = _store->getGarmentAt(index);
+    Garment *g = _store->getGarmentAt(index-1);
     if (g->updateStock(number)) {
         Quotation q(_seller->getCode(), g, number);
         _seller->addQuotation(q);
-        std::cout << q.toString();
         return true;
     } else {
         return false;
