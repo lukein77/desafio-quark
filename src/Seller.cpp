@@ -13,6 +13,6 @@ Seller::~Seller() {
 }
 
 void Seller::addQuotation(Quotation quotation) {
-    this->_history.push_front(quotation);
+    this->_history.push_back(quotation);
     _quotations++;
 }
