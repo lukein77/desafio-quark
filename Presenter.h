@@ -30,6 +30,8 @@ class Presenter {
         const int getGarmentStock(int index) const;
         bool setGarmentUnitPrice(int index, double price);
         bool makeQuotation(int index, int number);
+        void saveSeller();
+        void loadSeller();
 };
 
 #endif  // _PRESENTER_H_DEFINED_

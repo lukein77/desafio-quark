@@ -5,18 +5,21 @@
 #include "Shirt.h"
 #include "Trousers.h"
 #include <stdexcept>
+#include <fstream>
+#include <cereal/archives/binary.hpp>
 
 Presenter::Presenter(IView *view)
 {
     this->_view = view;
-    this->_store = new Store("Casa de ropa", "25 de mayo 1810");
-    this->_seller = new Seller("Juan", "Perez", 1);
-    this->_seller->loadQuotationHistory();
-    this->loadGarmentList();
+    _store = new Store("Casa de ropa", "25 de mayo 1810");
+    loadGarmentList();
+    _store->loadStock();
+    loadSeller();
 }
 
 Presenter::~Presenter() {
-    _seller->saveQuotationHistory();
+    saveSeller();
+    _store->saveStock();
     delete _store;
     delete _seller;
 }
@@ -26,12 +29,6 @@ const std::list<Quotation> Presenter::getSellerHistory() {
 }
 
 const std::vector<Garment*> Presenter::getGarmentList() const {
-    /*int n = _store->getTotalGarments();?
-    std::string temp = "";
-    for (int i = 0; i < n; i++) {
-        temp += std::to_string(i+1) + ") " + _store->getGarmentAt(i)->toString() + "\n";
-    }
-    return temp;*/
     return (_store->getGarmentList());
 }
 
@@ -85,6 +82,33 @@ bool Presenter::makeQuotation(int index, int number) {
         return false;
     }
 }
+
+void Presenter::saveSeller() {
+    std::ofstream output("seller.bin", std::ios::binary);
+
+    // Guardar la informacion del vendedor
+    cereal::BinaryOutputArchive output_archive(output);
+    output_archive(*_seller);
+
+    output.close();
+}
+
+void Presenter::loadSeller() {
+
+    std::ifstream input("seller.bin", std::ios::binary);
+    if (input.fail()) {
+        // No existe el archivo. Debo crear un nuevo vendedor
+        _seller = new Seller("Juan", "Perez", 1);
+    } else {
+        // Cargar el archivo del vendedor y los datos guardados
+        _seller = new Seller();
+        cereal::BinaryInputArchive input_archive(input);
+        input_archive(*_seller);
+
+        input.close();
+    }
+}
+
 
 void Presenter::loadGarmentList() {
    _store->addGarment(new ShortSleeveShirt(new StandardQuality(), 0, 100, new MaoNeck()));

@@ -5,6 +5,7 @@
 #include <list>
 #include "Quotation.h"
 
+/// @brief Clase que representa un Vendedor
 class Seller {
     private:
         std::string _name;
@@ -12,6 +13,7 @@ class Seller {
         int _sellerCode;
         std::list<Quotation> _history;
     public:
+        Seller() {}
         Seller(std::string name, std::string surname, int code);
         ~Seller();
         void addQuotation(Quotation quotation);
@@ -20,8 +22,12 @@ class Seller {
         const std::string getFullName() const { return (_name + " " + _surname); }
         const int getCode() const { return _sellerCode; }
         const std::list<Quotation> getHistory() const { return _history; }
-        void saveQuotationHistory();
-        void loadQuotationHistory();
+
+        // Serialization function
+        template<class Archive>
+        void serialize(Archive& ar) {
+            ar(_name, _surname, _sellerCode, _history);
+        }
 
 };
 
