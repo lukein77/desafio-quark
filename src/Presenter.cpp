@@ -8,9 +8,8 @@
 #include <fstream>
 #include <cereal/archives/binary.hpp>
 
-Presenter::Presenter(IView *view)
+Presenter::Presenter()
 {
-    this->_view = view;
     _store = new Store("Casa de ropa", "25 de mayo 1810");
     loadGarmentList();
     _store->loadStock();

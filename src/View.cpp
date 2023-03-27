@@ -1,6 +1,5 @@
 #include "View.h"
 #include "Presenter.h"
-//#include "Quotation.h"
 #include <iostream>
 #include <windows.h>
 #include <vector>
@@ -8,7 +7,7 @@
 
 /// @brief Constructor de la clase Vista
 View::View() {
-    _presenter = new Presenter(this);
+    _presenter = new Presenter();
     SetConsoleTitleW(L"Casa de Ropa");
 	setlocale(LC_ALL, "es_Es");
     showMainMenu();

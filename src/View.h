@@ -1,12 +1,10 @@
 #ifndef _VIEW_H_DEFINED_
 #define _VIEW_H_DEFINED_
 
-#include "IView.h"
 #include "Presenter.h"
 #include <string>
 
-
-class View : public IView {
+class View {
     private:
         Presenter *_presenter;
         void waitForKey(bool showMessage = false);

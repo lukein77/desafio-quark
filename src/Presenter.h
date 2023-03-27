@@ -7,17 +7,15 @@
 
 #define SELLER_FILE "data/seller.bin"
 
-class IView;
 class Quotation;
 
 class Presenter {
     private:
-        IView *_view;
         Store *_store;
         Seller *_seller;
         void loadGarmentList();
     public:
-        Presenter(IView *view);
+        Presenter();
         ~Presenter();
         const std::list<Quotation> getSellerHistory();
         const std::string getStoreName() const { return _store->getName(); }
