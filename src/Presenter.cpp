@@ -84,7 +84,7 @@ bool Presenter::makeQuotation(int index, int number) {
 }
 
 void Presenter::saveSeller() {
-    std::ofstream output("seller.bin", std::ios::binary);
+    std::ofstream output(SELLER_FILE, std::ios::binary);
 
     // Guardar la informacion del vendedor
     cereal::BinaryOutputArchive output_archive(output);
@@ -95,7 +95,7 @@ void Presenter::saveSeller() {
 
 void Presenter::loadSeller() {
 
-    std::ifstream input("seller.bin", std::ios::binary);
+    std::ifstream input(SELLER_FILE, std::ios::binary);
     if (input.fail()) {
         // No existe el archivo. Debo crear un nuevo vendedor
         _seller = new Seller("Juan", "Perez", 1);

@@ -6,6 +6,7 @@
 #include <vector>
 #include <limits>
 
+/// @brief Constructor de la clase Vista
 View::View() {
     _presenter = new Presenter(this);
     SetConsoleTitleW(L"Casa de Ropa");
@@ -30,6 +31,7 @@ void View::waitForKey(bool showMessage) {
     std::cin.get();
 }
 
+/// @brief Descarta el contenido del buffer de entrada para evitar errores al ingresar datos.
 void View::ignoreLine() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
@@ -45,6 +47,7 @@ void View::showHeader() {
     print("----------------------------------");
 }
 
+/// @brief Muestra el historial de cotizaciones del vendedor.
 void View::showSellerHistory() {
     std::system("cls");
     print("Historial de cotizaciones de ", false);
@@ -57,6 +60,7 @@ void View::showSellerHistory() {
     waitForKey();
 }
 
+/// @brief Muestra el listado de prendas disponibles.
 void View::showGarmentList() {
     std::vector<Garment*> garmentList = _presenter->getGarmentList();
     int n = _presenter->getTotalGarments();
@@ -79,13 +83,12 @@ void View::showMainMenu() {
         print("x) Salir");
         
         std::cin.get(option);
+        ignoreLine();
 
         if (option == '1') {
-            std::cin.ignore();
             showSellerHistory();
         } 
         else if (option == '2') {
-            std::cin.ignore();
             showQuotationMenu();
         }
         else if ((option == 'x') || (option == 'X')) {
@@ -103,7 +106,7 @@ void View::showMainMenu() {
 void View::showQuotationMenu() {
 
     bool validOption = false;
-    do { 
+    while (true) {
         std::system("cls");
         print("Listado de prendas:");
         showGarmentList();
@@ -120,14 +123,15 @@ void View::showQuotationMenu() {
             } else {
                 print("Codigo invalido.");
             }
-            waitForKey();
         } else {
-            validOption = true; // para salir del while
+            ignoreLine();
+            break;
         }
-    } while (!validOption);
-    std::cin.ignore();
+    }
 }
 
+/// @brief Muestra el menu para realizar una cotizacion de una prenda elegida.
+/// @param garmentCode Codigo de prenda a cotizar
 void View::makeQuotation(int garmentCode) {
     std::system("cls");
     std::string option;
@@ -147,11 +151,12 @@ void View::makeQuotation(int garmentCode) {
                 if (_presenter->makeQuotation(garmentCode, number)) {
                     print("La cotizacion se realizo correctamente.");
                 } else {
-                    print("Error realizando la cotizacion.");
+                    print("No hay suficientes unidades en stock.");
                 }
             }
         }
     }
+    waitForKey();
 }
 
 /// @brief Pide al usuario ingresar un entero mayor o igual a x.

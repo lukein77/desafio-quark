@@ -13,6 +13,9 @@ void Store::addGarment(Garment *garment) {
     this->_garments.push_back(garment);
 }
 
+/// @brief Devuelve una prenda segun su codigo
+/// @param index Codigo de prenda
+/// @return Prenda seleccionada
 Garment *Store::getGarmentAt(int index) const {
     try {
         return this->_garments.at(index);
@@ -22,10 +25,11 @@ Garment *Store::getGarmentAt(int index) const {
     } 
 }
 
+/// @brief Carga el stock de prendas
 void Store::loadStock() {
     std::vector<int> stockVector;
     // Cargar el stock de prendas del archivo
-    std::ifstream input("store.bin", std::ios::binary);
+    std::ifstream input(STORE_FILE, std::ios::binary);
     if (!input.fail()) {
         int stock;
         while (input.read(reinterpret_cast<char*>(&stock), sizeof(stock))) {
@@ -40,8 +44,9 @@ void Store::loadStock() {
     }
 }
 
+/// @brief Guarda el stock actual de ventas 
 void Store::saveStock() {
-    std::ofstream output("store.bin", std::ios::binary);
+    std::ofstream output(STORE_FILE, std::ios::binary);
     int stock;
 	for (auto g : _garments) {
         stock = g->getStock();

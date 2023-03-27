@@ -5,6 +5,8 @@
 #include "Store.h"
 #include "Seller.h"
 
+#define SELLER_FILE "data/seller.bin"
+
 class IView;
 class Quotation;
 

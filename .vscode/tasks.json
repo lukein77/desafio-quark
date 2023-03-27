@@ -8,11 +8,11 @@
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
-				"*.cpp",
+				"${workspaceFolder}\\src\\*.cpp",
 				"-o",
 				"${workspaceFolder}\\Main.exe",
 				"-I",
-				"."
+				".\\src"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

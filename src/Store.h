@@ -8,6 +8,8 @@
 #include "Seller.h"
 #include <cereal/types/vector.hpp>
 
+#define STORE_FILE "data/store.bin"
+
 class Store {
     private:
         std::string _name;
