@@ -10,7 +10,9 @@
 				"-g",
 				"*.cpp",
 				"-o",
-				"${workspaceFolder}\\Main.exe"
+				"${workspaceFolder}\\Main.exe",
+				"-I",
+				"."
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

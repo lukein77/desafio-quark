@@ -32,15 +32,3 @@ std::string Quotation::toString() {
         "\nPrecio final: $"+std::to_string(_finalPrice)+"\n";
     return msg;
 }
-
-void Quotation::saveToFile(std::ofstream &output) {
-    output << _id;
-    output << _timestamp;
-    output << _sellerCode;
-}
-
-void Quotation::loadFromFile(std::ifstream &input) {
-    input >> _id;
-    input >> _timestamp;
-    input >> _sellerCode;
-}

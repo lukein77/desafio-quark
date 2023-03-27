@@ -3,7 +3,8 @@
 
 #include "Garment.h"
 #include <string>
-#include <fstream>
+#include <cereal/types/string.hpp>
+#include <cereal/types/list.hpp>
 
 class Quotation {
     static int id_count;
@@ -20,10 +21,12 @@ class Quotation {
         Quotation(int sellerCode, Garment *garment, int number);
         ~Quotation() {}
         std::string toString();
-        void saveToFile(std::ofstream &output);
-        void loadFromFile(std::ifstream &input);
-        std::string getTimestamp() { return _timestamp; }
-        int getId() { return _id; }
+
+        // Serialization function
+        template<class Archive>
+        void serialize(Archive& ar) {
+            ar(_id, _sellerCode, _timestamp, _garment, _number, _unitPrice, _finalPrice);
+        }
 
 };
 

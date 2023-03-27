@@ -11,12 +11,12 @@ Presenter::Presenter(IView *view)
     this->_view = view;
     this->_store = new Store("Casa de ropa", "25 de mayo 1810");
     this->_seller = new Seller("Juan", "Perez", 1);
-    //this->_seller->loadQuotations();
+    this->_seller->loadQuotationHistory();
     this->loadGarmentList();
 }
 
 Presenter::~Presenter() {
-    _seller->saveQuotations();
+    _seller->saveQuotationHistory();
     delete _store;
     delete _seller;
 }
