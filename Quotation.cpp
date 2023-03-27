@@ -1,11 +1,8 @@
 #include "Quotation.h"
 #include <ctime>
 
-
-int Quotation::id_count = 0;
-
-Quotation::Quotation(int sellerCode, Garment *garment, int number) {
-    this->_id = ++id_count;     // Identificacion de cotizacion
+Quotation::Quotation(int sellerCode, int id, Garment *garment, int number) {
+    this->_id = id;     // Identificacion de cotizacion
 
     time_t now = time(0);
 	tm *localTime = localtime(&now);

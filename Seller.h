@@ -11,6 +11,7 @@ class Seller {
         std::string _name;
         std::string _surname;
         int _sellerCode;
+        int _quotations;
         std::list<Quotation> _history;
     public:
         Seller() {}
@@ -22,11 +23,12 @@ class Seller {
         const std::string getFullName() const { return (_name + " " + _surname); }
         const int getCode() const { return _sellerCode; }
         const std::list<Quotation> getHistory() const { return _history; }
+        const int lastQuotationID() const { return _quotations; }
 
         // Serialization function
         template<class Archive>
         void serialize(Archive& ar) {
-            ar(_name, _surname, _sellerCode, _history);
+            ar(_name, _surname, _sellerCode, _quotations, _history);
         }
 
 };

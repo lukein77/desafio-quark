@@ -75,7 +75,7 @@ bool Presenter::setGarmentUnitPrice(int index, double price) {
 bool Presenter::makeQuotation(int index, int number) {
     Garment *g = _store->getGarmentAt(index-1);
     if (g->updateStock(number)) {
-        Quotation q(_seller->getCode(), g, number);
+        Quotation q(_seller->getCode(), _seller->lastQuotationID()+1, g, number);
         _seller->addQuotation(q);
         return true;
     } else {

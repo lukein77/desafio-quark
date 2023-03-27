@@ -7,7 +7,6 @@
 #include <cereal/types/list.hpp>
 
 class Quotation {
-    static int id_count;
     private:
         int _id;                // Numero de cotizacion
         int _sellerCode;        // Codigo de vendedor
@@ -18,7 +17,7 @@ class Quotation {
         double _finalPrice;     // Precio final
     public:
         Quotation() {}
-        Quotation(int sellerCode, Garment *garment, int number);
+        Quotation(int sellerCode, int id, Garment *garment, int number);
         ~Quotation() {}
         std::string toString();
 
